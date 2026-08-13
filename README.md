@@ -5,11 +5,11 @@ A real-time collaborative survey and form filling service that allows multiple p
 - **Frontend** &ndash; a lobby plus four framework clients ([SurveyJS](https://surveyjs.io/) everywhere): React, Plain JS (`survey-js-ui`), Vue 3 and Angular
 - **Backend** &ndash; Node + Express + Socket.IO
 - **Storage** &ndash; In-memory (MVP, no database or authentication)
-- **survey-library** &ndash; all clients consume the sibling `survey-library` build (`file:` dependencies on its `packages/*/build`); all collaboration code (including the participants bar) lives in this repo
+- **survey-library** &ndash; all clients consume the published SurveyJS 3.x packages from npm (`survey-core` plus the UI package for their framework); all collaboration code (including the participants bar) lives in this repo
 
 ## How It Works
 
-- The repository mirrors the layout of [collaborative-form-editing](https://github.com/surveyjs/collaborative-form-editing): `lobby/` + `clients/{react,js,vue,angular}/` + `server/` + `shared/`.
+- The repository is laid out as `lobby/` + `clients/{react,js,vue,angular}/` + `server/` + `shared/`.
 - The **lobby** at `/` collects a framework (image picker), display name, room id and an optional custom survey schema, then navigates to `/{framework}/?room=<id>&name=<name>`. A custom schema is registered first via `POST /api/rooms`.
 - Each **client** (`/react/`, `/js/`, `/vue/`, `/angular/`) reads the room and name from the URL and joins over Socket.IO; without `?room=` it redirects back to the lobby.
 - The server stores the survey schema and current responses in memory.
@@ -41,15 +41,13 @@ See [`server/src/index.ts`](server/src/index.ts).
 ```bash
 npm install
 npm run install:angular   # once: the Angular client is not an npm workspace
-npm run build:angular     # once (and after fork/shared changes): /angular/ serves this build
+npm run build:angular     # once (and after shared changes): /angular/ serves this build
 npm run dev
 ```
 
 The application is available at [`http://localhost:3001`](http://localhost:3001). The first startup may take longer while Vite optimizes dependencies.
 
 To test collaboration, open the lobby in two browser tabs, pick any frameworks and join the same room identifier.
-
-> The survey-library fork must be built first (its `packages/*/build` folders are the `file:` targets): `survey-core`, then `survey-react-ui`, `survey-js-ui`, `survey-vue3-ui`, `survey-angular-ui`. After rebuilding the fork, restart the dev server.
 
 ### Production
 
@@ -94,7 +92,6 @@ npm run test:e2e:install
 
 ## Related Resources
 
-- [Collaborative Form Editing by SurveyJS](https://github.com/surveyjs/collaborative-form-editing)
 - [SurveyJS Website](https://surveyjs.io/)
 - [SurveyJS Documentation](https://surveyjs.io/documentation)
 - [SurveyJS Form Library Demos](https://surveyjs.io/form-library/examples/overview)

@@ -9,8 +9,8 @@
   },
   "dependencies": {
     "socket.io-client": "^4.8.1",
-    "survey-core": "next",
-    "survey-vue3-ui": "next",
+    "survey-core": "^3.0.0",
+    "survey-vue3-ui": "^3.0.0",
     "vue": "^3.5.13"
   },
   "devDependencies": {
